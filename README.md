@@ -2,7 +2,7 @@
 
 Implementation of **Hierarchical Shift-Aware Prototype Conditional Transport for Cross-Domain Fine-Grained Remote Sensing Image Classification**.
 
-This repository contains the main method and its required adversarial teacher training code. The notebook is adapted from the first (Low-to-Medium) training cell of `30_1-6.ipynb`. All six transfer directions use the same implementation and the uniform paper hyperparameters. Separate comparison experiments, ablations, plotting code, and historical notebooks are not included.
+ All six transfer directions use the same implementation and the uniform paper hyperparameters. Separate comparison experiments, ablations, plotting code, and historical notebooks are not included.
 
 ## Contents
 
@@ -23,11 +23,9 @@ checkpoints/<task>/last_model.pt   Generated adversarial teacher
 results/<task>/seed_2026/          Created during training
 ```
 
-The last two directories are runtime inputs/outputs, not bundled weights. The local submission folder includes the image archive; `.gitignore` excludes it from ordinary Git commits. Upload the archive as a separate dataset download or release asset and provide its actual URL when publishing.
 
 ## Installation
 
-The following environment was reported from the original AutoDL training server:
 
 | Component | Version / hardware |
 | --- | --- |
@@ -40,45 +38,8 @@ The following environment was reported from the original AutoDL training server:
 | CUDA reported by PyTorch | 12.8 |
 | GPU | NVIDIA GeForce RTX 5090 |
 
-From the repository root, create an isolated environment and install the CUDA 12.8 wheels first (Linux/Windows with an NVIDIA GPU):
-
-```bash
-conda create -n hspct-dd python=3.12.3 pip -y
-conda activate hspct-dd
-python -m pip install torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu128
-python -m pip install -r requirements.txt
-python -m pip check
-```
-
-The PyTorch command follows the [official previous-version instructions](https://pytorch.org/get-started/previous-versions/#v270); torchaudio is not used in this project. An existing Python 3.12.3 environment can be used instead of creating a Conda environment. Launch JupyterLab from the activated environment.
-
-`requirements.txt` pins the five direct dependencies, including CUDA build suffixes; it is not a complete transitive-dependency lockfile. These versions record the reported server environment, not a new validation run of the release package. The torchvision ImageNet weights may be downloaded on first use. Full training has not been rerun during release preparation.
-
-To check GPU availability, run `python`, then enter:
-
-```python
-import torch
-print(torch.__version__, torch.version.cuda)
-print(torch.cuda.is_available())
-print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')
-exit()
-```
-
-The CUDA value is the build version reported by PyTorch, not the NVIDIA driver version or a separately verified system CUDA Toolkit version. A compatible NVIDIA driver is required for GPU execution. The pinned CUDA build is not a macOS/CPU installation recipe.
 
 ## Dataset preparation
-
-From the repository root, extract the supplied archive:
-
-```bash
-tar -xzf dataset/images.tar.gz -C dataset
-```
-
-The resulting layout must contain `dataset/images/<domain>/<fine_class>/<image>.jpg`. Do not flatten the class directories. The archive checksum is in `dataset/SHA256SUMS.txt`.
-
-All six original task splits are included. Each direction has `source_train.csv`, `source_test.csv`, `target_train_unlabeled.csv`, and `target_test.csv`; both directions in a domain pair share `hierarchy.csv`. Sample membership, row order, class IDs, and class hierarchies are preserved. Release CSVs retain only the training fields: `crop_path` and, for labeled splits, `fine_id` and `coarse_id`. Image paths are relative to `DATA_ROOT`, so no server-specific path edits are needed.
-
-Target-training CSVs contain no label columns. The original implementation additionally infers class names from target image parent directories for diagnostic monitoring; these labels do not enter the training loss. Target-test labels are used for evaluation. The supplied protocol specifies object-instance splitting and excludes Boeing737 from both domain pairs involving High after quality control; the original protocol and exclusion summary are retained.
 
 ## Prepare the teacher
 
