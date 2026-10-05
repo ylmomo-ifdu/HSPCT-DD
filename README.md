@@ -124,4 +124,4 @@ These uniform settings replace the direction-specific values in the archived not
 
 ## Data attribution and licensing
 
-The classification crops are derived from FAIR1M 2.0. Redistribution and use of the underlying data remain subject to its original terms; a code license does not grant data rights. Confirm redistribution permission before making the image archive public. No additional code license has been assigned in this preparation step. Add the author-approved license and the verified paper citation/identifier before public release.
+The classification crops are derived from FAIR1M 2.0. Redistribution and use of the underlying data remain subject to its original terms; a code license does not grant data rights. 
