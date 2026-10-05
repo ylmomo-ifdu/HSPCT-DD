@@ -122,12 +122,6 @@ First train the teacher with the matching `--task`, then set the notebook's `TAS
 
 These uniform settings replace the direction-specific values in the archived notebook. Training losses and network definitions are otherwise preserved; path handling and release documentation have been adapted for portability.
 
-## Results
-
-Outputs are saved in `results/<TASK_NAME>/seed_2026/`. For the paper's final-epoch reporting protocol, use `last_model.pt` and the top-level `target_test` fields of `metrics.json`. Fine and coarse macro accuracy are mean per-class recall, not overall accuracy or macro-F1. `train_log.csv` records epoch-wise metrics.
-
-The inherited implementation also saves auxiliary `best_model.pt` and `best_target_test` monitoring outputs. These are not the final-epoch values used for reporting. The adversarial teacher input in this release explicitly points to `last_model.pt`.
-
 ## Data attribution and licensing
 
 The classification crops are derived from FAIR1M 2.0. Redistribution and use of the underlying data remain subject to its original terms; a code license does not grant data rights. Confirm redistribution permission before making the image archive public. No additional code license has been assigned in this preparation step. Add the author-approved license and the verified paper citation/identifier before public release.
